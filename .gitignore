@@ -8,6 +8,7 @@ target/
 pom.xml.versionsBackup
 
 # Gradle
+.settings
 .gradle
 gradlew.bat
 build
