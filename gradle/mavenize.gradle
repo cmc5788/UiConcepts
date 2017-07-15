@@ -1,0 +1,55 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging project.hasProperty('christophermcasey.packaging') \
+                ? project.property('christophermcasey.packaging') \
+                : 'aar'
+            groupId project.property('christophermcasey.groupId')
+            artifactId project.property('christophermcasey.artifactId')
+            version project.property('christophermcasey.version')
+
+            name project.property('christophermcasey.name')
+            description project.property('christophermcasey.desc')
+            url "https://github.com/christophermcasey/${project.property('christophermcasey.githubRepo')}"
+
+            scm {
+                url "https://github.com/christophermcasey/${project.property('christophermcasey.githubRepo')}"
+                connection "scm:git:git://github.com/christophermcasey/${project.property('christophermcasey.githubRepo')}.git"
+                developerConnection "scm:git:ssh://git@github.com/christophermcasey/${project.property('christophermcasey.githubRepo')}.git"
+                tag project.property('christophermcasey.version')
+            }
+
+            issueManagement {
+                system 'GitHub Issues'
+                url "https://github.com/christophermcasey/${project.property('christophermcasey.githubRepo')}/issues"
+            }
+
+            licenses {
+                license {
+                    name 'MIT'
+                    url 'http://opensource.org/licenses/MIT'
+                }
+            }
+
+            organization {
+                name 'Christopher M. Casey, LLC.'
+                url 'http://christophermcasey.com/'
+            }
+
+            developers {
+                developer {
+                    id 'cmc5788'
+                    name 'Christopher Casey'
+                }
+            }
+        }
+    }
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        pom.artifactId = project.property('christophermcasey.artifactId')
+    }
+}
