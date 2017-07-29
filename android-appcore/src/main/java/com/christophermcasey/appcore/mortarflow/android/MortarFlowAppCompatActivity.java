@@ -613,6 +613,7 @@ public abstract class MortarFlowAppCompatActivity extends AppCompatActivity
     int invis = config.getInt(ActionBarPresenter.ACTION_BAR_INVIS, -1);
     disableHome = config.getBoolean(ActionBarPresenter.ACTION_BAR_DISABLEHOME);
     boolean up = config.getBoolean(ActionBarPresenter.ACTION_BAR_UP);
+    int upIcon = config.getInt(ActionBarPresenter.ACTION_BAR_UP_ICON, -1);
     int icon = config.getInt(ActionBarPresenter.ACTION_BAR_ICON, -1);
     int logo = config.getInt(ActionBarPresenter.ACTION_BAR_LOGO, -1);
     float elevation = config.getFloat(ActionBarPresenter.ACTION_BAR_ELEVATION, -1);
@@ -656,6 +657,8 @@ public abstract class MortarFlowAppCompatActivity extends AppCompatActivity
       setAbUp(false);
     } else if (up) {
       setAbUp(true);
+    } else if (upIcon != -1) {
+      setAbUp(upIcon);
     } else if (logo != -1) {
       setAbLogo(logo);
     } else if (icon != -1) {
@@ -701,6 +704,15 @@ public abstract class MortarFlowAppCompatActivity extends AppCompatActivity
       actionBar.setHomeButtonEnabled(up);
       actionBar.setDisplayHomeAsUpEnabled(up);
     }
+  }
+
+  private void setAbUp(@DrawableRes int resId) {
+    if (drawerToggle != null) {
+      drawerToggle.setDrawerIndicatorEnabled(false);
+    }
+    actionBar().setDisplayHomeAsUpEnabled(true);
+    actionBar().setHomeButtonEnabled(true);
+    actionBar().setHomeAsUpIndicator(resId);
   }
 
   private void setAbIcon(@DrawableRes int resId) {

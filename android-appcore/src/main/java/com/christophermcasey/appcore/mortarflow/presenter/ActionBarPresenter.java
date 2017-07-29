@@ -35,6 +35,7 @@ public class ActionBarPresenter extends Presenter<ActionBarPresenter.Activity> {
   public static final String ACTION_BAR_INVIS = "ACTION_BAR_INVIS";
   public static final String ACTION_BAR_DISABLEHOME = "ACTION_BAR_DISABLEHOME";
   public static final String ACTION_BAR_UP = "ACTION_BAR_UP";
+  public static final String ACTION_BAR_UP_ICON = "ACTION_BAR_UP_ICON";
   public static final String ACTION_BAR_ICON = "ACTION_BAR_ICON";
   public static final String ACTION_BAR_LOGO = "ACTION_BAR_LOGO";
   public static final String ACTION_BAR_ELEVATION = "ACTION_BAR_ELEVATION";
@@ -69,6 +70,10 @@ public class ActionBarPresenter extends Presenter<ActionBarPresenter.Activity> {
 
     public final T up() {
       return bool(ACTION_BAR_UP, true);
+    }
+
+    public final T up(@DrawableRes int resId) {
+      return integer(ACTION_BAR_UP_ICON, resId);
     }
 
     public final T icon(@DrawableRes int resId) {
@@ -153,6 +158,7 @@ public class ActionBarPresenter extends Presenter<ActionBarPresenter.Activity> {
       }
       int i = 0;
       if (bundle.containsKey(ACTION_BAR_UP)) i++;
+      if (bundle.containsKey(ACTION_BAR_UP_ICON)) i++;
       if (bundle.containsKey(ACTION_BAR_ICON)) i++;
       if (bundle.containsKey(ACTION_BAR_LOGO)) i++;
       if (i > 1) {
