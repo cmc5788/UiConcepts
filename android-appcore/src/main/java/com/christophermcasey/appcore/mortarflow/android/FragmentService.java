@@ -71,7 +71,24 @@ public final class FragmentService implements Scoped {
     return getFragmentManager(view.getContext());
   }
 
+  @Nullable
+  public static android.app.FragmentManager getNonSupportFragmentManager(@NonNull Context context) {
+    try {
+      return getFragmentService(context).getNonSupportFragmentManager();
+    } catch (Exception e) {
+      Log.e(SERVICE_NAME, "failed getNonSupportFragmentManager", e);
+    }
+    return null;
+  }
+
+  @Nullable
+  public static android.app.FragmentManager getNonSupportFragmentManager(@NonNull View view) {
+    return getNonSupportFragmentManager(view.getContext());
+  }
+
   private WeakReference<FragmentManager> fragmentManagerRef = new WeakReference<>(null);
+  private WeakReference<android.app.FragmentManager> nonSupportFragmentManagerRef =
+      new WeakReference<>(null);
   private boolean registered;
 
   FragmentService(@NonNull MortarFlowAppCompatActivity activity) {
@@ -80,6 +97,7 @@ public final class FragmentService implements Scoped {
 
   void update(@NonNull MortarFlowAppCompatActivity activity) {
     fragmentManagerRef = new WeakReference<>(activity.getSupportFragmentManager());
+    nonSupportFragmentManagerRef = new WeakReference<>(activity.getFragmentManager());
   }
 
   @Override
@@ -96,6 +114,13 @@ public final class FragmentService implements Scoped {
   @NonNull
   public FragmentManager getFragmentManager() {
     FragmentManager fragmentManager = fragmentManagerRef.get();
+    if (fragmentManager == null) throw new IllegalStateException("no fragment manager.");
+    return fragmentManager;
+  }
+
+  @NonNull
+  public android.app.FragmentManager getNonSupportFragmentManager() {
+    android.app.FragmentManager fragmentManager = nonSupportFragmentManagerRef.get();
     if (fragmentManager == null) throw new IllegalStateException("no fragment manager.");
     return fragmentManager;
   }
