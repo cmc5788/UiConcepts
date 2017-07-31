@@ -14,6 +14,8 @@ public class RecyclerViewDelayedRestoreState extends RecyclerView {
   private Parcelable delayedState;
   private boolean stateRestored;
 
+  private boolean restoreAutomatically = true;
+
   public RecyclerViewDelayedRestoreState(Context context) {
     super(context);
   }
@@ -24,6 +26,14 @@ public class RecyclerViewDelayedRestoreState extends RecyclerView {
 
   public RecyclerViewDelayedRestoreState(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
+  }
+
+  public void setRestoreAutomatically(boolean restoreAutomatically) {
+    this.restoreAutomatically = restoreAutomatically;
+  }
+
+  public void restoreNow() {
+    doRestoreState(getAdapter());
   }
 
   @CallSuper
@@ -38,7 +48,7 @@ public class RecyclerViewDelayedRestoreState extends RecyclerView {
   public void setAdapter(Adapter adapter) {
     if (getAdapter() != null) getAdapter().unregisterAdapterDataObserver(dataObserver);
     if (adapter != null) adapter.registerAdapterDataObserver(dataObserver);
-    doRestoreState(adapter);
+    if (restoreAutomatically) doRestoreState(adapter);
     super.setAdapter(adapter);
   }
 
@@ -54,32 +64,32 @@ public class RecyclerViewDelayedRestoreState extends RecyclerView {
   private final AdapterDataObserver dataObserver = new AdapterDataObserver() {
     @Override
     public void onChanged() {
-      doRestoreState(getAdapter());
+      if (restoreAutomatically) doRestoreState(getAdapter());
     }
 
     @Override
     public void onItemRangeChanged(int positionStart, int itemCount) {
-      doRestoreState(getAdapter());
+      if (restoreAutomatically) doRestoreState(getAdapter());
     }
 
     @Override
     public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-      doRestoreState(getAdapter());
+      if (restoreAutomatically) doRestoreState(getAdapter());
     }
 
     @Override
     public void onItemRangeInserted(int positionStart, int itemCount) {
-      doRestoreState(getAdapter());
+      if (restoreAutomatically) doRestoreState(getAdapter());
     }
 
     @Override
     public void onItemRangeRemoved(int positionStart, int itemCount) {
-      doRestoreState(getAdapter());
+      if (restoreAutomatically) doRestoreState(getAdapter());
     }
 
     @Override
     public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-      doRestoreState(getAdapter());
+      if (restoreAutomatically) doRestoreState(getAdapter());
     }
   };
 
