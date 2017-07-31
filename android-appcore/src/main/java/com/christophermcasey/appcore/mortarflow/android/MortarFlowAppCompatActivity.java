@@ -700,9 +700,11 @@ public abstract class MortarFlowAppCompatActivity extends AppCompatActivity
       drawerToggle.setDrawerIndicatorEnabled(!up);
       actionBar.setDisplayHomeAsUpEnabled(true);
       actionBar.setHomeButtonEnabled(true);
+      actionBar().setHomeAsUpIndicator(null);
     } else {
       actionBar.setHomeButtonEnabled(up);
       actionBar.setDisplayHomeAsUpEnabled(up);
+      actionBar().setHomeAsUpIndicator(null);
     }
   }
 
