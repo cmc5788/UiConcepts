@@ -144,8 +144,6 @@ class ScreenViewImpl<V extends View & ScreenView, VP extends ScreenViewPresenter
   }
 
   public Parcelable onRestoreInstanceStateImpl(@NonNull V v, Parcelable state) {
-    if (!presenterAttachedToWindow) this.onAttachedToWindowImpl(v);
-
     VP presenter = getPresenter(v, false);
     // SUPER
     Bundle b = (state instanceof Bundle)
