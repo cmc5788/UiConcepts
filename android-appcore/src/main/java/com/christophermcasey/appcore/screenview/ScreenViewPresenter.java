@@ -182,6 +182,7 @@ public class ScreenViewPresenter<V extends View & ScreenView> extends ViewPresen
   protected void onSaveInstanceState(@NonNull V v, @NonNull Bundle outState) {
     if (shouldPersistReceivedTransientParams() && //
         receivedTransientParams != null && !receivedTransientParams.isEmpty()) {
+      transformPersistingTransientParams(v, receivedTransientParams);
       String key = getClass().getSimpleName() + //
           "_persistedTransientParamsKey_" + //
           getPersistedTransientParamsKey();
@@ -278,6 +279,10 @@ public class ScreenViewPresenter<V extends View & ScreenView> extends ViewPresen
 
   protected boolean shouldPersistReceivedTransientParams() {
     return !getPersistedTransientParamsKey().isEmpty();
+  }
+
+  protected void transformPersistingTransientParams(@NonNull V v, @NonNull Bundle params) {
+    // no-op
   }
 
   @NonNull
