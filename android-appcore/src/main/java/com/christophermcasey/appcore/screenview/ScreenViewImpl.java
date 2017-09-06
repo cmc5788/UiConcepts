@@ -121,8 +121,6 @@ class ScreenViewImpl<V extends View & ScreenView, VP extends ScreenViewPresenter
 
   public void dispatchRestoreInstanceStateImpl(@NonNull V v,
       @NonNull SparseArray<Parcelable> container) {
-    if (!presenterAttachedToWindow) this.onAttachedToWindowImpl(v);
-
     VP presenter = getPresenter(v, false);
     // SUPER
     allowScreenViewCalls = true;
