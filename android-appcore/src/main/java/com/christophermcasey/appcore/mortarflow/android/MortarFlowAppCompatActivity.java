@@ -30,21 +30,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import com.squareup.otto.Bus;
-import flow.Flow;
-import flow.FlowDelegate;
-import flow.History;
-import flow.StateParceler;
-import flow.path.PathContainerView;
-import flow.path.PathContextFactory;
-import java.util.HashSet;
-import java.util.Set;
 import com.christophermcasey.appcore.R;
 import com.christophermcasey.appcore.mortarflow.FramePathContainerView;
 import com.christophermcasey.appcore.mortarflow.MortarInflater;
@@ -55,8 +45,16 @@ import com.christophermcasey.appcore.screenview.DrawerScreenView;
 import com.christophermcasey.appcore.screenview.HandlesTransientParams;
 import com.christophermcasey.appcore.screenview.SplashScreenView;
 import com.christophermcasey.appcore.segue.Segues;
+import com.squareup.otto.Bus;
+import flow.Flow;
+import flow.FlowDelegate;
+import flow.History;
+import flow.StateParceler;
+import flow.path.PathContainerView;
+import flow.path.PathContextFactory;
+import java.util.HashSet;
+import java.util.Set;
 import mortar.MortarScope;
-import mortar.MortarScopeDevHelper;
 import mortar.bundler.BundleServiceRunner;
 
 import static android.support.v4.widget.CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER;
@@ -458,10 +456,6 @@ public abstract class MortarFlowAppCompatActivity extends AppCompatActivity
       if (drawerToggle != null && drawerToggle.onOptionsItemSelected(item)) return true;
       if (item.getItemId() == android.R.id.home) return container.onBackPressed();
     }
-    if (buildConfigDebug() && item.getItemId() == R.id.action_log_scope_hierarchy) {
-      Log.d("MORTAR_SCOPE", MortarScopeDevHelper.scopeHierarchyToString(activityScope));
-      return true;
-    }
     return (drawerView != null && drawerView.onOptionsItemSelected(item))
         || container.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
   }
@@ -480,12 +474,6 @@ public abstract class MortarFlowAppCompatActivity extends AppCompatActivity
     if (actionBarMenuRes != null) {
       for (int menuRes : actionBarMenuRes) {
         getMenuInflater().inflate(menuRes, menu);
-      }
-    }
-
-    if (actionBarMenuRes == null || actionBarMenuRes.length > 0) {
-      if (buildConfigDebug()) {
-        getMenuInflater().inflate(R.menu.log_scope_hierarchy_menu, menu);
       }
     }
 
@@ -819,19 +807,6 @@ public abstract class MortarFlowAppCompatActivity extends AppCompatActivity
   }
 
   private Boolean _buildConfigDebug = null;
-
-  protected boolean buildConfigDebug() {
-    if (_buildConfigDebug == null) {
-      try {
-        _buildConfigDebug = (boolean) Class.forName(getPackageName() + ".BuildConfig")
-            .getDeclaredField("DEBUG")
-            .get(null);
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
-    }
-    return _buildConfigDebug;
-  }
 
   private int displayWidth() {
     Display display = getWindowManager().getDefaultDisplay();
