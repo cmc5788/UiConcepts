@@ -3,26 +3,22 @@ buildscript {
     mavenCentral()
     jcenter()
   }
-  dependencies {
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-  }
 }
 
 group = project.property('christophermcasey.groupId')
 version = project.property('christophermcasey.version')
 
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
 apply from: file('../gradle/checkstyle.gradle')
 apply from: file('../gradle/javadoc.gradle')
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.3"
+  compileSdkVersion 26
+  buildToolsVersion "27.0.1"
 
   defaultConfig {
     minSdkVersion 16
-    targetSdkVersion 25
+    targetSdkVersion 26
     versionCode 1
     versionName "1.0"
     versionName "1.0"
@@ -46,9 +42,9 @@ android {
 
 dependencies {
   // support
-  compile 'com.android.support:appcompat-v7:25.3.1'
-  compile 'com.android.support:recyclerview-v7:25.3.1'
-  compile 'com.android.support:design:25.3.1'
+  compile 'com.android.support:appcompat-v7:26.1.0'
+  compile 'com.android.support:recyclerview-v7:26.1.0'
+  compile 'com.android.support:design:26.1.0'
 
   // mortar & flow
   compile 'com.squareup.mortar:mortar:0.19'
@@ -57,14 +53,15 @@ dependencies {
 
   // dagger
   compile 'com.google.dagger:dagger:2.8'
-  apt 'com.google.dagger:dagger-compiler:2.8'
+  annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
   compile 'org.glassfish:javax.annotation:10.0-b28'
 
   // json
-  compile 'com.google.code.gson:gson:2.8.0'
+  compile 'com.google.code.gson:gson:2.8.1'
 
   // buttery goodness
   compile 'com.jakewharton:butterknife:7.0.1'
+  annotationProcessor 'com.jakewharton:butterknife:7.0.1'
 
   // otto-ey goodness?
   compile 'com.squareup:otto:1.3.8'

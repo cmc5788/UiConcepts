@@ -13,12 +13,12 @@ apply from: file('../gradle/checkstyle.gradle')
 apply from: file('../gradle/javadoc.gradle')
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.2"
+  compileSdkVersion 26
+  buildToolsVersion "27.0.1"
 
   defaultConfig {
     minSdkVersion 16
-    targetSdkVersion 25
+    targetSdkVersion 26
     versionCode 1
     versionName "1.0"
   }
@@ -41,6 +41,8 @@ android {
 
 dependencies {
   provided project(':android-appcore')
+  annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
+  annotationProcessor 'com.jakewharton:butterknife:7.0.1'
 
   // Dependencies for local unit tests
   provided 'com.squareup.assertj:assertj-android:1.1.1'
