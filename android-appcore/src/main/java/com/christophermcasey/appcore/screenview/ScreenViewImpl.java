@@ -109,7 +109,7 @@ class ScreenViewImpl<V extends View & ScreenView, VP extends ScreenViewPresenter
   }
 
   public void onSizeChangedImpl(@NonNull V v, int w, int h, int oldw, int oldh) {
-    if (!presenterAttachedToWindow) this.onAttachedToWindowImpl(v);
+    if (!presenterAttachedToWindow) return;
 
     VP presenter = getPresenter(v, false);
     // SUPER
